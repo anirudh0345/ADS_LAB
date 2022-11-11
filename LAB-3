@@ -123,11 +123,11 @@ int count_of_Islands(int arr[20][20],int a,int b,int n,int parent[], int rank[])
                 if(freq[x] == 0)
                 {
                     num = num + 1;
-                    freq[x] = freq[x] + 1;;
+                    freq[x] = freq[x] + 1;
                 }
                 else
                 {
-                    freq[x] = freq[x] + 1;;
+                    freq[x] = freq[x] + 1;
                 }
             }
         }
