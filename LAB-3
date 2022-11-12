@@ -164,4 +164,4 @@ int main()
     total = count_of_Islands(arr,r,c,n,parent,rank);
     printf("\nThe number of islands are: %d\n",total);
     return 0;
-}    
+}   
