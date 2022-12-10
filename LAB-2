@@ -166,20 +166,25 @@ int main()
     cout<<"Skip list(insertion,deletion and search)\n";
     while(choice!=5)
     {
-        cout << "1:Insertion 2:Deletion 3:Search 4:Display 5:Exit
+        cout << "1:Insertion 2:Deletion 3:Search 4:Display 5:Exit\n";
         cout << "Enter the choice: \n";
         cin >> choice;
-        cout <<"\nEnter the value";
-        cin >> value;
+        
         switch(choice)
         {
             case 1:
+                    cout <<"\nEnter the value";
+                    cin >> value;
                     lst.insertElement(value);
                     break;
             case 2:
+                    cout <<"\nEnter the value";
+                    cin >> value;
                     lst.deleteElement(value);
                     break;
             case 3:
+                    cout <<"\nEnter the value";
+                    cin >> value;
                     lst.searchElement(value);
                     break;
             case 4:
@@ -190,4 +195,3 @@ int main()
 
     return 0;
 }
-
