@@ -236,7 +236,6 @@ void TreeNode::fill(int indx)
 
 void TreeNode::borrowFromPrev(int indx) 
 { 
-  
     	TreeNode *c=child[indx]; 
     	TreeNode *sibling=child[indx-1]; 
 
@@ -257,13 +256,11 @@ void TreeNode::borrowFromPrev(int indx)
   
     	c->n += 1; 
     	sibling->n -= 1; 
-  
  	return; 
 } 
 
 void TreeNode::borrowFromNext(int indx) 
 { 
-  
     	TreeNode *c=child[indx]; 
     	TreeNode *sibling=child[indx+1]; 
   
@@ -285,7 +282,6 @@ void TreeNode::borrowFromNext(int indx)
 
     	c->n += 1; 
     	sibling->n -= 1; 
-  
     	return; 
 } 
 
@@ -322,7 +318,7 @@ void Tree::remove(int k)
 { 
     	if (!root) 
     	{ 
-        	cout << "The tree is empty\n"; 
+        	cout << "Empty tree\n"; 
         	return; 
     	} 
  
@@ -362,5 +358,4 @@ int main()
 	cout<<"Traversal after deletion is"<<endl;
 	t.traverse();
 	return 0;
-
 }
