@@ -29,9 +29,6 @@ class Tree
 {
 	TreeNode *root = NULL;
 	public:
-		/*Tree(){
-			root = NULL;
-		}*/
 		void traverse()
 		{
 			if(root != NULL)
@@ -51,10 +48,10 @@ TreeNode::TreeNode(bool leaf1)
 
 int TreeNode::findKey(int k)
 {
-	int idx = 0;
-	while(idx<n && keys[idx]<k)
-		++idx;
-	return idx;
+	int indx = 0;
+	while(indx<n && keys[indx]<k)
+		++indx;
+	return indx;
 }
 
 void Tree::insert(int k)
@@ -148,13 +145,13 @@ void TreeNode::traverse()
 
 void TreeNode::remove(int k)
 {
-	int idx = findKey(k);
-	if(idx<n && keys[idx] == k)
+	int indx = findKey(k);
+	if(indx<n && keys[indx] == k)
 	{
 		if(leaf)
-			removeFromLeaf(idx);
+			removeFromLeaf(indx);
 		else
-			removeFromNonLeaf(idx);
+			removeFromNonLeaf(indx);
 	}
 	else
 	{
@@ -163,85 +160,85 @@ void TreeNode::remove(int k)
 			cout<<"The key doesn't exist"<<endl;
 			return;
 		}
-		bool flag = ((idx==n)?true : false);
-		if(child[idx]->n < 2)
-			fill(idx);
-		if(flag && idx>n)
-			child[idx-1]->remove(k);
+		bool flag = ((indx==n)?true : false);
+		if(child[indx]->n < 2)
+			fill(indx);
+		if(flag && indx>n)
+			child[indx-1]->remove(k);
 		else
-			child[idx]->remove(k);
+			child[indx]->remove(k);
 	}
 	return;
 }
 
-void TreeNode::removeFromLeaf(int idx)
+void TreeNode::removeFromLeaf(int indx)
 {
-	for(int i=idx+1; i<n; ++i)
+	for(int i=indx+1; i<n; ++i)
 		keys[i-1] = keys[i];
 	n--;
 	return;
 }
 
-void TreeNode::removeFromNonLeaf(int idx)
+void TreeNode::removeFromNonLeaf(int indx)
 {
-	int k = keys[idx];
-	if(child[idx]->n >=2)
+	int k = keys[indx];
+	if(child[indx]->n >=2)
 	{
-		int pred = getPred(idx);
-		keys[idx] = pred;
-		child[idx]->remove(pred);
+		int pred = getPred(indx);
+		keys[indx] = pred;
+		child[indx]->remove(pred);
 	}
-	else if(child[idx+1]->n >= 2)
+	else if(child[indx+1]->n >= 2)
 	{
-		int succ = getSucc(idx);
-		keys[idx] = succ;
-		child[idx+1]->remove(succ);
+		int succ = getSucc(indx);
+		keys[indx] = succ;
+		child[indx+1]->remove(succ);
 	}
 	else{
-		merge(idx);
-		child[idx]->remove(k);
+		merge(indx);
+		child[indx]->remove(k);
 	}
 	return;
 }
 
-int TreeNode::getPred(int idx)
+int TreeNode::getPred(int indx)
 {
-	TreeNode *curr = child[idx];
+	TreeNode *curr = child[indx];
 	while(!curr->leaf)
 		curr = curr->child[curr->n];
 	return curr->keys[curr->n-1];
 }
 
-int TreeNode::getSucc(int idx) 
+int TreeNode::getSucc(int indx) 
 { 
-	TreeNode *curr = child[idx+1]; 
+	TreeNode *curr = child[indx+1]; 
     	while (!curr->leaf) 
     		curr = curr->child[0]; 
     	return curr->keys[0]; 
 } 
   
-void TreeNode::fill(int idx) 
+void TreeNode::fill(int indx) 
 { 
-	if(idx!=0 && child[idx-1]->n>=2) 
-        	borrowFromPrev(idx); 
+	if(indx!=0 && child[indx-1]->n>=2) 
+        	borrowFromPrev(indx); 
 
-    	else if (idx!=n && child[idx+1]->n>=2) 
-        	borrowFromNext(idx); 
+    	else if (indx!=n && child[indx+1]->n>=2) 
+        	borrowFromNext(indx); 
     	else
     	{ 
-        	if (idx != n) 
-            		merge(idx); 
+        	if (indx != n) 
+            		merge(indx); 
         	else
-            		merge(idx-1); 
+            		merge(indx-1); 
     	} 
     	return; 
 } 
 
-void TreeNode::borrowFromPrev(int idx) 
+void TreeNode::borrowFromPrev(int indx) 
 { 
   
-    	TreeNode *c=child[idx]; 
-    	TreeNode *sibling=child[idx-1]; 
+    	TreeNode *c=child[indx]; 
+    	TreeNode *sibling=child[indx-1]; 
 
     	for (int i=c->n-1; i>=0; --i) 
         	c->keys[i+1] = c->keys[i]; 
@@ -251,12 +248,12 @@ void TreeNode::borrowFromPrev(int idx)
         	for(int i=c->n; i>=0; --i) 
         	    c->child[i+1] = c->child[i]; 
     	} 
-    	c->keys[0] = keys[idx-1]; 
+    	c->keys[0] = keys[indx-1]; 
 
     	if(!c->leaf) 
         	c->child[0] = sibling->child[sibling->n]; 
 
-    	keys[idx-1] = sibling->keys[sibling->n-1]; 
+    	keys[indx-1] = sibling->keys[sibling->n-1]; 
   
     	c->n += 1; 
     	sibling->n -= 1; 
@@ -264,18 +261,18 @@ void TreeNode::borrowFromPrev(int idx)
  	return; 
 } 
 
-void TreeNode::borrowFromNext(int idx) 
+void TreeNode::borrowFromNext(int indx) 
 { 
   
-    	TreeNode *c=child[idx]; 
-    	TreeNode *sibling=child[idx+1]; 
+    	TreeNode *c=child[indx]; 
+    	TreeNode *sibling=child[indx+1]; 
   
-    	c->keys[(c->n)] = keys[idx]; 
+    	c->keys[(c->n)] = keys[indx]; 
 
     	if (!(c->leaf)) 
         	c->child[(c->n)+1] = sibling->child[0]; 
   
-    	keys[idx] = sibling->keys[0]; 
+    	keys[indx] = sibling->keys[0]; 
  
     	for (int i=1; i<sibling->n; ++i) 
         	sibling->keys[i-1] = sibling->keys[i]; 
@@ -292,12 +289,12 @@ void TreeNode::borrowFromNext(int idx)
     	return; 
 } 
 
-void TreeNode::merge(int idx) 
+void TreeNode::merge(int indx) 
 { 
-    	TreeNode *c = child[idx]; 
-    	TreeNode *sibling = child[idx+1]; 
+    	TreeNode *c = child[indx]; 
+    	TreeNode *sibling = child[indx+1]; 
 
-    	c->keys[1] = keys[idx]; 
+    	c->keys[1] = keys[indx]; 
  
     	for (int i=0; i<sibling->n; ++i) 
         	c->keys[i+2] = sibling->keys[i]; 
@@ -308,10 +305,10 @@ void TreeNode::merge(int idx)
             		c->child[i+2] = sibling->child[i]; 
     	} 
   
-    	for (int i=idx+1; i<n; ++i) 
+    	for (int i=indx+1; i<n; ++i) 
         	keys[i-1] = keys[i]; 
  
-    	for (int i=idx+2; i<=n; ++i) 
+    	for (int i=indx+2; i<=n; ++i) 
         	child[i-1] = child[i]; 
 
     	c->n += sibling->n+1; 
@@ -347,11 +344,12 @@ void Tree::remove(int k)
 int main() 
 { 
     	Tree t; 
-	int n,k;
+	int num,k;
+	cout<<"2-3 Tree (insertion and deletion)";
 	cout<<"Enter the no. of elements"<<endl;
-	cin>>n;
+	cin>>num;
 	cout<<"Enter the keys"<<endl;
-	for(int i=0; i<n; i++)
+	for(int i=0; i<num; i++)
 	{
 		cin>>k;
 		t.insert(k);
